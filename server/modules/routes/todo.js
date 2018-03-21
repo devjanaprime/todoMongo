@@ -9,7 +9,11 @@ router.get( '/', ( req, res ) => {
 
 router.post( '/', ( req, res ) => {
     console.log( 'in todo POST:', req.body );
-
+    let newTask = {
+        name: req.body.taskName,
+        complete: false
+    } // end newTask
+    items.push( newTask );
     res.send( 'meow' );
 }); // end todo POST
 
