@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mongo Todo</title>
+    <link rel="stylesheet" href="styles/genero.css">
     <script src="vendors/jquery-3.2.1.min.js"></script>
     <script src="scripts/client.js"></script>
 </head>
 <body>
     <h1>Mongo Todo</h1>
+    <section id='inputSection'>
+        <h3>Create Task:</h3>
+        <input type="text" placeholder="task name" id="taskIn">
+        <button id="addTaskButton">Add</button>
+    </section>
+    <section id='outputSection'>
+        <h3>Existing Tasks:</h3>
+        <ul id='outputList'>
+        </ul>
+    </section>
 </body>
 </html>
