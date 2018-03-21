@@ -11,10 +11,10 @@ let getTasks = () => {
         outputElement.empty();
         for( task of response.items ){
              let outputString = '<li class="taskItem';
-             if( task.completed ){
+             if( task.complete ){
                 outputString += ' completed';
              }
-             outputString += '" data-id=' + task.name + '>' + task.name + '</li>';
+             outputString += '" data-id=' + task._id + '>' + task.name + '</li>';
              outputElement.append( outputString );
         } // end for
     }); // end ajax
@@ -31,7 +31,7 @@ let readyNow = () => {
             type: 'POST',
             url: '/todo',
             data: objectToSend
-        }).done( function( response ){
+        }).done( ( response ) => {
             if( verbose ) console.log( 'back from server with:', response );
             $( '#taskIn' ).val( '' );
             getTasks();
@@ -39,11 +39,24 @@ let readyNow = () => {
     }); // end addTaskButton on click
 
     $( document ).on( 'click', '.taskItem', ( e ) =>{
-        console.log( 'task item clicked:', $( e.target ).data( 'id' ) );
+        if( verbose ) console.log( 'task item clicked:', $( e.target ).data( 'id' ) );
+        toggleCompletion( $( e.target ).data( 'id' ), $( e.target ).attr( 'class' ).includes( "completed" ) );
     }); //end taskItem on click
 
     // init
     getTasks();
 } //end readyNow
+
+let toggleCompletion = ( taskID, completed ) => {
+    if( verbose ) console.log( 'in toggleCompletion for:', taskID, completed );
+    $.ajax({
+        type: 'PUT',
+        url: '/todo',
+        data: { id: taskID, complete: !completed }
+    }).done( ( response ) =>{
+        if( verbose ) console.log( 'back from PUT with:', response );
+        getTasks();
+    }) // end ajax
+} // end toggleCompletedTask
 
 $( document ).ready( readyNow );
